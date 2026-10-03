@@ -126,6 +126,30 @@ html[dir=rtl] #mclk{right:auto;left:0}
 #mclk .band{animation:mclkd 2s linear infinite}
 @keyframes mclkd{from{transform:translateX(-80px)}to{transform:translateX(0)}}
 @media(prefers-reduced-motion:reduce){#mclk .band{animation:none}#mclk .dr{transition:none}}
+/* SODELEC smartphone (≤640px) : header non collé + 3 colonnes produits + hero/header compacts */
+@media(max-width:640px){
+header{position:static}
+.top{padding:10px 12px;gap:8px}
+.logo{font-size:24px;flex:1 1 auto;min-width:0}.logo i{width:24px;height:24px}.logo .slg{font-size:12px}
+.search{order:5;flex:1 1 100%;min-width:0;padding:9px 12px}
+.lang button{padding:6px 8px;font-size:14px}
+#inst,#open{order:6;flex:1 1 0;padding:8px 10px;font-size:14px;white-space:nowrap}
+.hero{padding:22px 16px 26px}
+.hero h1{font-size:34px}
+.hero p{margin:10px 0 16px;font-size:15px}
+#mclk{width:140px;margin:18px auto 0}
+.perks{gap:6px 16px;padding:10px 12px;font-size:13px}
+main{padding:10px 10px 40px}
+.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.p{padding:7px;gap:3px;border-radius:6px;min-width:0}
+.ph{height:58px;border-width:2px}
+.ph svg.pi{width:38px;height:38px}
+.p small{font-size:10.5px;line-height:1.25;overflow-wrap:anywhere}
+.p h3{font-size:13px;line-height:1.1;overflow-wrap:break-word;letter-spacing:-.01em}
+.stock{font-size:10.5px}
+.price{font-size:16px}
+.p button{padding:7px 4px;font-size:12px;line-height:1.15}
+}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#14213d">
