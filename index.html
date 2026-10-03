@@ -7841,7 +7841,7 @@ document.addEventListener("click",e=>{
  const d=e.target.dataset;if(!d)return;
  if(d.l)setLang(d.l);
  if(d.c){cat=d.c;renderCats();renderGrid()}
- if(d.add||d.p){const id=d.add||d.p;cart[id]=(cart[id]||0)+1;renderCart();if(d.add)$("cart").classList.add("open")}
+ if(d.add||d.p){const id=d.add||d.p;cart[id]=(cart[id]||0)+1;renderCart()}
  if(d.m){if(--cart[d.m]<=0)delete cart[d.m];renderCart()}
 });
 let QT;$("q").oninput=e=>{clearTimeout(QT);QT=setTimeout(()=>{q=e.target.value.toLowerCase().trim();renderGrid()},200)};
