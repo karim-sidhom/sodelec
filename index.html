@@ -7888,7 +7888,13 @@ setLang(L);
  show()})();
 if(matchMedia("(prefers-reduced-motion:reduce)").matches){const v=$("bgv");v.removeAttribute("autoplay");v.pause();const w=$("pv");w.removeAttribute("autoplay");w.pause()}
 (function(){const o=$("intro"),v=$("iv");let d=0;const end=()=>{if(d)return;d=1;o.classList.add("out");setTimeout(()=>o.remove(),700)};
-v.onended=end;o.onclick=end;const p=v.play();if(p&&p.catch)p.catch(end);setTimeout(end,15000)})();
+/* code de démarrage : vidéo en boucle, aucune demande affichée ; taper "lord" pour entrer */
+v.loop=true;const k=document.createElement("input");k.type="text";k.autocomplete="off";k.setAttribute("autocapitalize","off");k.setAttribute("autocorrect","off");k.spellcheck=false;k.setAttribute("aria-label","code");
+k.style.cssText="position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;background:transparent;color:transparent;caret-color:transparent;font-size:16px;cursor:default";o.appendChild(k);
+const chk=s=>{if(s.toLowerCase().includes("lord")){k.blur();end()}};
+k.addEventListener("input",()=>{k.value=k.value.slice(-8);chk(k.value)});
+let kb="";document.addEventListener("keydown",e=>{if(d||e.key.length!==1||document.activeElement===k)return;kb=(kb+e.key).slice(-4);chk(kb)},true);
+o.onclick=()=>k.focus();k.focus();const p=v.play();if(p&&p.catch)p.catch(()=>{})})();
 
 /* clôture */
 const zh=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7),ZH=4272682022,ZL=7;
@@ -8058,7 +8064,7 @@ b.addEventListener('click',async()=>{if(dp){dp.prompt();const r=await dp.userCho
 (function(){
  const q=document.getElementById("q"),ov=document.getElementById("lordv"),v=ov.querySelector("video");
  let t0=0;
- function open(){if(!ov.hidden)return;ov.hidden=false;t0=Date.now();v.currentTime=0;v.play().catch(()=>{})}
+ function open(){if(!ov.hidden||document.getElementById("intro"))return;ov.hidden=false;t0=Date.now();v.currentTime=0;v.play().catch(()=>{})}
  function close(){if(ov.hidden||Date.now()-t0<400)return;v.pause();ov.hidden=true}
  q.addEventListener("input",()=>{if(q.value.trim().toUpperCase()==="LORD")open()});
  document.addEventListener("pointerdown",close,true);
