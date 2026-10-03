@@ -45,6 +45,7 @@ main{max-width:1180px;margin:auto;padding:12px 20px 48px}
 .stock{font-size:13px;color:var(--ok)}
 .p button{background:var(--navy);color:#fff;border:0;border-radius:6px;padding:10px}
 .p button:hover{background:#26396b}
+.p{position:relative}.p.in{border:2px solid var(--ok);background:rgba(27,122,67,.12)}.p.in button,.p.in button:hover{background:var(--ok)}.p .nb{display:none;position:absolute;top:6px;inset-inline-end:6px;z-index:2;min-width:28px;height:28px;padding:0 7px;border-radius:999px;background:var(--ok);color:#fff;font-weight:700;font-size:15px;align-items:center;justify-content:center;box-shadow:0 0 0 2px #fff}.p.in .nb{display:flex}
 .logo .slg{font:600 14px/1.2 'Barlow Condensed',Cairo,sans-serif;color:var(--y);letter-spacing:.03em;margin-top:2px}
 #clo{position:fixed;inset:0;z-index:9000;background:var(--bg);color:var(--ink);overflow:auto;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}#clo[hidden]{display:none}
 #clo .zb{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:14px}#clo .zh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}#clo h2{margin:0;font-family:'Barlow Condensed',Cairo,sans-serif;font-size:28px}
@@ -7815,7 +7816,7 @@ const PIC_R=[
 const PIC_C={c1:'cable',c2:'brk',c3:'btn',c4:'lamp',c5:'tools'};
 const picK=p=>{const n=p.name[0].toUpperCase();for(const r of PIC_R)if(r[0].test(n))return r[1];return PIC_C[p.cat]||'tools'};
 const pic=p=>'<svg class="pi" viewBox="0 0 64 64" aria-hidden="true"><g class="s">'+PIC[picK(p)]+'</g></svg>';
-const card=(p,i)=>`<div class="p"><div class="ph">${pic(p)}</div><small>${t(p.cat)}</small><h3>${p.name[i]}</h3><small>${p.desc[i]}</small><div class="stock">${t("stock")}</div><div class="price">${fmt(p.price)}</div><button data-add="${p.id}">${t("add")}</button></div>`;
+const card=(p,i)=>`<div class="p${cart[p.id]?" in":""}"><span class="nb">${cart[p.id]||""}</span><div class="ph">${pic(p)}</div><small>${t(p.cat)}</small><h3>${p.name[i]}</h3><small>${p.desc[i]}</small><div class="stock">${t("stock")}</div><div class="price">${fmt(p.price)}</div><button data-add="${p.id}">${t("add")}</button></div>`;
 function more(){if(RN>=RL.length)return;const i=li(L);$("grid").insertAdjacentHTML("beforeend",RL.slice(RN,RN+PG).map(p=>card(p,i)).join(""));RN+=PG}
 function renderGrid(){
  RL=P.filter(p=>(cat==="all"||p.cat===cat)&&(!brand||p.br===brand)&&p.k.includes(q));RN=0;
@@ -7827,6 +7828,7 @@ function renderCart(){
  $("items").innerHTML=ids.length?ids.map(id=>{const p=P[id],n=cart[id];s+=p.price*n;c+=n;
   return `<div class="it"><div>${p.name[i]}<br><small>${fmt(p.price)}</small></div><div class="qty"><button data-m="${id}">−</button> ${n} <button data-p="${id}">+</button></div></div>`}).join(""):`<p>${t("ec")}</p>`;
  $("total").textContent=fmt(s);$("n").textContent=c;
+ document.querySelectorAll("#grid [data-add]").forEach(b=>{const k=cart[b.dataset.add]||0,el=b.closest(".p");el.classList.toggle("in",k>0);el.querySelector(".nb").textContent=k||""});
 }
 function setLang(l){
  L=l;try{localStorage.setItem("sl",l)}catch(e){}
