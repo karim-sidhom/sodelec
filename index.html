@@ -8068,6 +8068,20 @@ b.addEventListener('click',async()=>{if(dp){dp.prompt();const r=await dp.userCho
 })();
 </script>
 <script>
+/* Commande secrète : taper "street fighter" dans la recherche -> clé demandée -> page des prix concurrents (worker) */
+(function(){
+ const q=document.getElementById("q");
+ q.addEventListener("input",()=>{
+  if(q.value.trim().toLowerCase().replace(/\s+/g," ")!=="street fighter")return;
+  q.value="";q.dispatchEvent(new Event("input"));
+  const cle=prompt("Clé");
+  if(!cle)return;
+  const u="https://sodelec-prix.lordsidhom78.workers.dev/?cle="+encodeURIComponent(cle.trim());
+  const w=window.open(u,"_blank");if(!w)location.href=u;
+ });
+})();
+</script>
+<script>
 /* Horloge compteur (style compteur électrique) */
 (function(){const S=document.getElementById("mclk");if(!S)return;const D=[...S.querySelectorAll(".dr")],cur=D.map(()=>-1);
 const set=(k,v,anim)=>{const g=D[k];let tgt=v;
